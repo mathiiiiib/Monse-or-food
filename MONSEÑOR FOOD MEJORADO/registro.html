@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta - Mi Restaurante</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="login">
+
+        <h1>Mi Restaurante</h1>
+        <h2>Crear cuenta</h2>
+
+        <input 
+            type="text" 
+            id="usuario" 
+            placeholder="Nombre de usuario"
+        >
+
+        <input 
+            type="password" 
+            id="contraseña" 
+            placeholder="Contraseña"
+        >
+
+        <input 
+            type="password" 
+            id="confirmar" 
+            placeholder="Confirmar contraseña"
+        >
+
+        <button onclick="crearCuenta()">
+            Crear cuenta
+        </button>
+
+        <p id="mensaje"></p>
+
+        <p>
+            ¿Ya tienes una cuenta?
+            <a href="login.html">Iniciar sesión</a>
+        </p>
+
+    </div>
+
+    <script>
+
+        function crearCuenta() {
+
+            let usuario = document.getElementById("usuario").value;
+            let contraseña = document.getElementById("contraseña").value;
+            let confirmar = document.getElementById("confirmar").value;
+            let mensaje = document.getElementById("mensaje");
+
+
+            if (usuario === "" || contraseña === "" || confirmar === "") {
+
+                mensaje.innerText = "Completa todos los campos";
+
+                return;
+            }
+
+
+            if (contraseña !== confirmar) {
+
+                mensaje.innerText = "Las contraseñas no coinciden";
+
+                return;
+            }
+
+
+            if (usuario === "Admin") {
+
+                mensaje.innerText = "Ese usuario no está disponible";
+
+                return;
+            }
+
+
+            let usuarios =
+                JSON.parse(localStorage.getItem("usuarios")) || [];
+
+
+            let existe = usuarios.find(
+                u => u.usuario === usuario
+            );
+
+
+            if (existe) {
+
+                mensaje.innerText = "Ese usuario ya existe";
+
+                return;
+            }
+
+
+            usuarios.push({
+
+                usuario: usuario,
+                contraseña: contraseña
+
+            });
+
+
+            localStorage.setItem(
+                "usuarios",
+                JSON.stringify(usuarios)
+            );
+
+
+            alert("Cuenta creada correctamente");
+
+
+            window.location.href = "login.html";
+        }
+
+    </script>
+
+</body>
+</html>

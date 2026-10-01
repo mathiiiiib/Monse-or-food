@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión - Mi Restaurante</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="login">
+
+        <h1>Mi Restaurante</h1>
+        <h2>Iniciar sesión</h2>
+
+        <input type="text" id="usuario" placeholder="Usuario">
+
+        <input type="password" id="contraseña" placeholder="Contraseña">
+
+        <button onclick="iniciarSesion()">
+            Iniciar sesión
+        </button>
+
+        <p id="mensaje"></p>
+
+        <p>
+            ¿No tienes una cuenta?
+            <a href="registro.html">Crear cuenta</a>
+        </p>
+
+    </div>
+
+    <script>
+
+        function iniciarSesion() {
+
+            let usuario = document.getElementById("usuario").value;
+            let contraseña = document.getElementById("contraseña").value;
+            let mensaje = document.getElementById("mensaje");
+
+            let usuarios =
+                JSON.parse(localStorage.getItem("usuarios")) || [];
+
+
+            if (usuario === "Admin" && contraseña === "123") {
+
+                localStorage.setItem("usuarioActivo", "Admin");
+                localStorage.setItem("tipoUsuario", "admin");
+
+                window.location.href = "index.html";
+
+                return;
+            }
+
+
+            let usuarioEncontrado = usuarios.find(
+                u =>
+                    u.usuario === usuario &&
+                    u.contraseña === contraseña
+            );
+
+
+            if (usuarioEncontrado) {
+
+                localStorage.setItem(
+                    "usuarioActivo",
+                    usuario
+                );
+
+                localStorage.setItem(
+                    "tipoUsuario",
+                    "usuario"
+                );
+
+                window.location.href = "index.html";
+
+            } else {
+
+                mensaje.innerText =
+                    "Usuario o contraseña incorrectos";
+            }
+        }
+
+    </script>
+
+</body>
+</html>

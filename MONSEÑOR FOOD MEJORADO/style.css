@@ -1,0 +1,507 @@
+:root {
+    --navy: #163a2e;
+    --navy-light: #235846;
+    --gold: #c9a227;
+    --gold-light: #ddbd63;
+    --maroon: #2f6b52;
+    --cream: #f5f1e3;
+    --paper: #fffdf8;
+    --ink: #1d241f;
+    --ink-soft: #56635c;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: var(--cream);
+    color: var(--ink);
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* ---------- Header ---------- */
+
+header {
+    background-color: var(--navy);
+    color: var(--cream);
+    padding: 18px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 4px solid var(--gold);
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.escudo {
+    width: 52px;
+    height: 58px;
+    flex-shrink: 0;
+}
+
+.nombre-colegio h1 {
+    font-size: 24px;
+    line-height: 1.1;
+    color: var(--cream);
+}
+
+.lema {
+    font-size: 13px;
+    color: var(--gold-light);
+    margin-top: 4px;
+}
+
+.acciones-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.usuario b {
+    color: var(--gold-light);
+}
+
+.btn-secundario {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(246, 241, 226, 0.4);
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+}
+
+.btn-secundario:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+}
+
+.btn-carrito {
+    background-color: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+}
+
+.btn-carrito:hover {
+    background-color: var(--gold-light);
+}
+
+/* ---------- Main / menu ---------- */
+
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+main > h2 {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 30px;
+    color: var(--navy);
+}
+
+main > h2::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 3px;
+    background-color: var(--gold);
+    margin: 12px auto 30px auto;
+}
+
+.productos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    width: 100%;
+}
+
+.producto {
+    background-color: var(--paper);
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(15, 35, 80, 0.08);
+    box-shadow: 0 4px 14px rgba(15, 35, 80, 0.08);
+    text-align: center;
+    min-width: 0;
+    transition: box-shadow 0.2s ease;
+}
+
+.producto:hover {
+    box-shadow: 0 6px 18px rgba(15, 35, 80, 0.14);
+}
+
+.producto img {
+    display: block;
+    width: 100%;
+    height: 170px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin: 0 auto 14px auto;
+}
+
+.producto h3 {
+    margin-bottom: 6px;
+    font-size: 20px;
+    color: var(--navy);
+}
+
+.producto p {
+    margin-bottom: 10px;
+    color: var(--ink-soft);
+    font-size: 14px;
+}
+
+.producto strong {
+    display: block;
+    color: var(--maroon);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 19px;
+    margin-bottom: 14px;
+}
+
+.producto button {
+    background-color: var(--navy);
+    color: var(--cream);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+    width: 100%;
+}
+
+.producto button:hover {
+    background-color: var(--navy-light);
+}
+
+/* ---------- Carrito / boleta ---------- */
+
+.carrito {
+    background-color: var(--paper);
+    margin-top: 40px;
+    padding: 28px;
+    border-radius: 10px;
+    border: 1px solid rgba(15, 35, 80, 0.08);
+    box-shadow: 0 4px 14px rgba(15, 35, 80, 0.08);
+}
+
+.carrito h2 {
+    margin-bottom: 20px;
+    color: var(--navy);
+    font-size: 24px;
+}
+
+.vacio {
+    color: var(--ink-soft);
+    font-style: italic;
+}
+
+.item-carrito {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px dashed rgba(15, 35, 80, 0.2);
+}
+
+.item-carrito button {
+    background-color: var(--maroon);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.item-carrito button:hover {
+    background-color: #611a25;
+}
+
+.linea-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 10px;
+    padding-top: 14px;
+    border-top: 2px solid var(--navy);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 21px;
+    color: var(--navy);
+    font-weight: 700;
+}
+
+.vaciar {
+    margin-top: 18px;
+    background-color: transparent;
+    color: var(--ink-soft);
+    border: 1px solid rgba(15, 35, 80, 0.25);
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.vaciar:hover {
+    border-color: var(--maroon);
+    color: var(--maroon);
+}
+
+.confirmar {
+    margin-top: 18px;
+    margin-left: 10px;
+    background-color: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+}
+
+.confirmar:hover {
+    background-color: var(--gold-light);
+}
+
+/* ---------- Login / registro ---------- */
+
+.login {
+    width: 360px;
+    max-width: 90%;
+    margin: 80px auto;
+    background-color: var(--paper);
+    padding: 34px;
+    border-radius: 12px;
+    border-top: 5px solid var(--gold);
+    box-shadow: 0 6px 22px rgba(15, 35, 80, 0.18);
+    text-align: center;
+}
+
+.login h1 {
+    color: var(--navy);
+    margin-bottom: 6px;
+    font-size: 24px;
+}
+
+.login h2 {
+    margin-bottom: 22px;
+    color: var(--ink-soft);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.login input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #d8d2bf;
+    border-radius: 7px;
+    font-size: 15px;
+    font-family: inherit;
+    background-color: var(--cream);
+}
+
+.login input:focus {
+    outline: 2px solid var(--gold);
+    border-color: var(--gold);
+}
+
+.login button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--navy);
+    color: var(--cream);
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+}
+
+.login button:hover {
+    background-color: var(--navy-light);
+}
+
+.login p {
+    margin-top: 15px;
+    font-size: 14px;
+    color: var(--ink-soft);
+}
+
+.login a {
+    color: var(--maroon);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#mensaje {
+    color: var(--maroon);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* ---------- Modal de pedido ---------- */
+
+.fondo-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 35, 80, 0.6);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-pedido {
+    background-color: var(--paper);
+    width: 420px;
+    max-width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    border-top: 5px solid var(--gold);
+    padding: 0 28px 28px 28px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+.modal-cabecera {
+    background-color: var(--navy);
+    margin: 0 -28px 20px -28px;
+    padding: 22px 28px 18px 28px;
+    border-radius: 0 0 0 0;
+    text-align: center;
+}
+
+.modal-etiqueta {
+    color: var(--gold-light);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+.numero-pedido {
+    color: var(--cream);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.modal-pedido .item-carrito {
+    text-align: left;
+}
+
+.cerrar-modal {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--navy);
+    color: var(--cream);
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+}
+
+.cerrar-modal:hover {
+    background-color: var(--navy-light);
+}
+
+/* ---------- Ventana de aviso ---------- */
+
+.modal-aviso {
+    background-color: var(--paper);
+    width: 320px;
+    max-width: 100%;
+    border-radius: 10px;
+    border-top: 4px solid var(--gold);
+    padding: 26px 24px 20px 24px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+.modal-aviso p {
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.cerrar-aviso {
+    display: block;
+    margin-left: auto;
+    padding: 9px 20px;
+    background-color: var(--navy);
+    color: var(--cream);
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+}
+
+.cerrar-aviso:hover {
+    background-color: var(--navy-light);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 800px) {
+    .productos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .acciones-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .productos {
+        grid-template-columns: 1fr;
+    }
+}

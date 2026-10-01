@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cantina · Colegio Monseñor Lasagna</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+
+        <div class="marca">
+            <img src="monsenor-lasagna-1.png" width="75" height="auto" alt="Logo Colegio">
+            <div class="nombre-colegio">
+                <h1>Colegio Monseñor Lasagna</h1>
+            </div>
+
+        </div>
+
+        <div class="acciones-header">
+
+            <div class="usuario">
+                <span>Hola, <b id="usuarioActivo"></b></span>
+                <button class="btn-secundario" onclick="cerrarSesion()">Cerrar sesión</button>
+            </div>
+
+            <button class="btn-carrito" onclick="mostrarCarrito()">
+                Carrito (<span id="cantidadCarrito">0</span>)
+            </button>
+
+        </div>
+
+    </header>
+
+    <main>
+
+        <h2>Nuestro Menú</h2>
+
+        <div class="productos">
+
+            <div class="producto">
+    <img src="imagenes/chipa.jpg" alt="Chipa">
+    <h3>Chipa</h3>
+    <p>Chipa de almidón</p>
+    <strong>Gs. 5.000</strong>
+    <button onclick="agregarAlCarrito('Chipa', 5000)">
+        Agregar al carrito
+    </button>
+</div>
+
+<div class="producto">
+    <img src="imagenes/pizzeta.jpg" alt="Pizzeta">
+    <h3>Pizzeta</h3>
+    <p>Pizzeta de queso con jamon</p>
+    <strong>Gs. 5.000</strong>
+    <button onclick="agregarAlCarrito('Pizzeta', 5000)">
+        Agregar al carrito
+    </button>
+</div>
+
+<div class="producto">
+    <img src="imagenes/sandwich.jpg" alt="Sandwich de milanesa">
+    <h3>Sandwich de milanesa</h3>
+    <p>Sandwich de milanesa</p>
+    <strong>Gs. 10.000</strong>
+    <button onclick="agregarAlCarrito('Sandwich de milanesa', 10000)">
+        Agregar al carrito
+    </button>
+</div>
+
+<div class="producto">
+    <img src="imagenes/empanada.jpg" id="productos" alt="Empanada">
+    <h3>Empanada</h3>
+    <p>Empanada de carne</p>
+    <strong>Gs. 5.000</strong>
+    <button onclick="agregarAlCarrito('Empanada', 5000)">
+        Agregar al carrito
+    </button>
+</div>
+
+<div class="producto">
+    <img src="imagenes/mixto.jpg" alt="Mixto">
+    <h3>Mixto</h3>
+    <p>Mixto</p>
+    <strong>Gs. 5.000</strong>
+    <button onclick="agregarAlCarrito('Mixto', 5000)">
+        Agregar al carrito
+    </button>
+</div>
+
+<div class="producto">
+    <img src="imagenes/gaseosa.jpg" alt="Gaseosa">
+    <h3>Gaseosa</h3>
+    <p>Botella de medio litro de Coca-Cola</p>
+    <strong>Gs. 10.000</strong>
+    <button onclick="agregarAlCarrito('Gaseosa', 10000)">
+        Agregar al carrito
+    </button>
+</div>
+        </div>
+
+        <section id="carrito" class="carrito">
+
+            <h2>Tu boleta</h2>
+
+            <div id="listaCarrito">
+                <p class="vacio">El carrito está vacío.</p>
+            </div>
+
+            <div class="linea-total">
+                <span>Total</span>
+                <span>Gs. <span id="total">0</span></span>
+            </div>
+
+            <button class="vaciar" onclick="vaciarCarrito()">
+                Vaciar carrito
+            </button>
+            <button class="confirmar" onclick="confirmarCarrito()">
+                Confirmar Carrito
+            </button>
+        </section>
+
+    </main>
+
+    <div id="fondoModal" class="fondo-modal">
+        <div class="modal-pedido">
+
+            <div class="modal-cabecera">
+                <p class="modal-etiqueta">Pedido confirmado</p>
+                <p class="numero-pedido">N.º <span id="numeroPedido"></span></p>
+            </div>
+
+            <div id="detalleModal"></div>
+
+            <div class="linea-total">
+                <span>Total</span>
+                <span>Gs. <span id="totalModal">0</span></span>
+            </div>
+
+            <button class="cerrar-modal" onclick="cerrarModal()">
+                Aceptar
+            </button>
+
+        </div>
+    </div>
+
+    <div id="fondoAviso" class="fondo-modal">
+        <div class="modal-aviso">
+            <p id="textoAviso"></p>
+            <button class="cerrar-aviso" onclick="cerrarAviso()">Aceptar</button>
+        </div>
+    </div>
+
+    <script>
+
+        let usuarioActivo = localStorage.getItem("usuarioActivo");
+
+        if (!usuarioActivo) {
+            window.location.href = "login.html";
+        }
+
+        document.getElementById("usuarioActivo").innerText = usuarioActivo;
+
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+
+        function agregarAlCarrito(nombre, precio) {
+
+            let productoExistente = carrito.find(
+                producto => producto.nombre === nombre
+            );
+
+            if (productoExistente) {
+                productoExistente.cantidad++;
+            } else {
+                carrito.push({
+                    nombre: nombre,
+                    precio: precio,
+                    cantidad: 1
+                });
+            }
+
+            guardarCarrito();
+            mostrarCarrito();
+        }
+
+
+        function mostrarCarrito() {
+
+            let lista = document.getElementById("listaCarrito");
+            let total = 0;
+            let cantidadTotal = 0;
+
+            lista.innerHTML = "";
+
+            if (carrito.length === 0) {
+
+                lista.innerHTML = "<p class='vacio'>El carrito está vacío.</p>";
+
+            } else {
+
+                carrito.forEach((producto, indice) => {
+
+                    let subtotal = producto.precio * producto.cantidad;
+
+                    total += subtotal;
+                    cantidadTotal += producto.cantidad;
+
+                    lista.innerHTML += `
+                        <div class="item-carrito">
+
+                            <div>
+                                <strong>${producto.nombre}</strong>
+                                <br>
+                                Cantidad: ${producto.cantidad}
+                                <br>
+                                Gs. ${subtotal.toLocaleString()}
+                            </div>
+
+                            <button onclick="eliminarProducto(${indice})">
+                                Eliminar
+                            </button>
+
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById("total").innerText =
+                total.toLocaleString();
+
+            document.getElementById("cantidadCarrito").innerText =
+                cantidadTotal;
+        }
+
+
+        function eliminarProducto(indice) {
+
+            carrito.splice(indice, 1);
+
+            guardarCarrito();
+            mostrarCarrito();
+        }
+
+
+        function vaciarCarrito() {
+
+            carrito = [];
+
+            guardarCarrito();
+            mostrarCarrito();
+        }
+
+
+        function guardarCarrito() {
+
+            localStorage.setItem(
+                "carrito",
+                JSON.stringify(carrito)
+            );
+        }
+
+
+        function confirmarCarrito() {
+
+            if (carrito.length === 0) {
+                mostrarAviso("Tu carrito está vacío.");
+                return;
+            }
+
+            let numero = Math.floor(100 + Math.random() * 900);
+
+            document.getElementById("numeroPedido").innerText = numero;
+
+            let detalle = document.getElementById("detalleModal");
+            let total = 0;
+
+            detalle.innerHTML = "";
+
+            carrito.forEach(producto => {
+
+                let subtotal = producto.precio * producto.cantidad;
+                total += subtotal;
+
+                detalle.innerHTML += `
+                    <div class="item-carrito">
+                        <div>
+                            <strong>${producto.nombre}</strong>
+                            <br>
+                            Cantidad: ${producto.cantidad}
+                        </div>
+                        <div>
+                            Gs. ${subtotal.toLocaleString()}
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("totalModal").innerText =
+                total.toLocaleString();
+
+            document.getElementById("fondoModal").style.display = "flex";
+
+            vaciarCarrito();
+        }
+
+
+        function cerrarModal() {
+
+            document.getElementById("fondoModal").style.display = "none";
+
+            mostrarAviso("Gracias por tu compra");
+        }
+
+
+        function mostrarAviso(mensaje) {
+
+            document.getElementById("textoAviso").innerText = mensaje;
+            document.getElementById("fondoAviso").style.display = "flex";
+        }
+
+
+        function cerrarAviso() {
+
+            document.getElementById("fondoAviso").style.display = "none";
+        }
+
+
+        function cerrarSesion() {
+
+            localStorage.removeItem("usuarioActivo");
+            localStorage.removeItem("tipoUsuario");
+
+            window.location.href = "login.html";
+        }
+
+
+        mostrarCarrito();
+
+    </script>
+
+</body>
+</html>
